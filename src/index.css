@@ -38,6 +38,10 @@
 }
 
 /* DatePicker Luxury Overrides */
+.react-datepicker-popper {
+  z-index: 100 !important;
+}
+
 .react-datepicker {
   @apply !bg-white dark:!bg-[#1A1A1A] !border-gray-100 dark:!border-white/10 !rounded-2xl !shadow-2xl !font-sans overflow-hidden;
 }

@@ -71,7 +71,9 @@ const Reservations = () => {
                     selected={formData.date}
                     onChange={handleDateChange}
                     minDate={new Date()}
-                    className="w-full p-4 bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-primary outline-none"
+                    portalId="root"
+                    placeholderText="Select a date"
+                    className="w-full p-4 bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-primary outline-none cursor-pointer"
                     dateFormat="MMMM d, yyyy"
                   />
                 </div>
