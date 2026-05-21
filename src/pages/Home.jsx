@@ -1,10 +1,30 @@
 import React, { useState } from 'react';
 import Hero from '../components/Hero';
-import { ugandanDestinations, testimonials, sampleItinerary } from '../data/ugandaData';
-import { Star, MapPin, ArrowRight, Quote, CheckCircle2, ChevronDown, Send } from 'lucide-react';
+import { ugandanDestinations, testimonials, sampleItinerary, ugandanVideos } from '../data/ugandaData';
+import { Star, MapPin, ArrowRight, Quote, CheckCircle2, ChevronDown, Send, Play, X as CloseIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+
+const VideoCard = ({ video, onPlay }) => (
+  <motion.div 
+    whileHover={{ y: -10 }}
+    className="relative group cursor-pointer rounded-[2rem] overflow-hidden shadow-2xl"
+    onClick={() => onPlay(video)}
+  >
+    <img src={video.thumbnail} className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110" alt={video.title} />
+    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 transition-transform border border-white/30">
+        <Play className="text-white fill-white ml-1" size={32} />
+      </div>
+    </div>
+    <div className="absolute bottom-8 left-8 right-8 text-left">
+      <div className="text-primary font-bold text-xs uppercase tracking-widest mb-2">{video.category}</div>
+      <h4 className="text-white text-2xl font-serif font-bold">{video.title}</h4>
+    </div>
+  </motion.div>
+);
 
 const FAQItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -162,6 +182,68 @@ const Home = () => {
           </AnimatePresence>
         </motion.div>
       </section>
+
+      {/* Virtual Safari Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-40">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+          <div className="max-w-2xl">
+            <motion.span 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              className="text-primary font-bold tracking-[0.4em] uppercase text-xs"
+            >
+              Visual Journey
+            </motion.span>
+            <h2 className="text-4xl md:text-6xl font-serif font-bold mt-4">Virtual Safari</h2>
+            <p className="text-gray-500 dark:text-gray-400 mt-6 text-lg">
+              Experience the sights and sounds of the Pearl of Africa from your screen. 
+              Our curated cinematic collection brings the wild closer to you.
+            </p>
+          </div>
+          <button className="px-8 py-3 border-2 border-primary text-primary font-bold rounded-full hover:bg-primary hover:text-white transition-all whitespace-nowrap">
+            View Full Gallery
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {ugandanVideos.map((video) => (
+            <VideoCard key={video.id} video={video} onPlay={setActiveVideo} />
+          ))}
+        </div>
+      </section>
+
+      {/* Video Modal */}
+      <AnimatePresence>
+        {activeVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/95 backdrop-blur-xl"
+          >
+            <button 
+              onClick={() => setActiveVideo(null)}
+              className="absolute top-8 right-8 text-white hover:text-primary transition-colors z-[210]"
+            >
+              <CloseIcon size={40} />
+            </button>
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="w-full max-w-6xl aspect-video rounded-3xl overflow-hidden shadow-[0_0_100px_rgba(184,134,11,0.2)] border border-white/10"
+            >
+              <iframe
+                src={`https://www.youtube.com/embed/${activeVideo.videoUrl.split('v=')[1]}?autoplay=1`}
+                title={activeVideo.title}
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Experience Section with Parallax Feel */}
       <section className="bg-primary/[0.03] dark:bg-primary/[0.05] py-32 mt-32 pattern-bg overflow-hidden">

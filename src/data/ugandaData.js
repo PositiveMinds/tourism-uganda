@@ -96,6 +96,30 @@ export const sampleItinerary = [
   }
 ];
 
+export const ugandanVideos = [
+  {
+    id: 1,
+    title: "The Gorillas of Bwindi",
+    thumbnail: "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?auto=format&fit=crop&q=80&w=800",
+    videoUrl: "https://www.youtube.com/watch?v=6m82V2C7m0k", // National Geographic Gorilla video
+    category: "Wildlife"
+  },
+  {
+    id: 2,
+    title: "Murchison Falls: The Power of the Nile",
+    thumbnail: "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&q=80&w=800",
+    videoUrl: "https://www.youtube.com/watch?v=S7b62YI4S9w", // Travel video
+    category: "Adventure"
+  },
+  {
+    id: 3,
+    title: "The Pearl of Africa Tour",
+    thumbnail: "https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&q=80&w=800",
+    videoUrl: "https://www.youtube.com/watch?v=68CIn-V3W_A", // Uganda Tourism Board video
+    category: "Culture"
+  }
+];
+
 export const heroSlides = [
   {
     id: 1,
