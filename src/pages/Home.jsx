@@ -1,9 +1,39 @@
 import React, { useState } from 'react';
 import Hero from '../components/Hero';
 import { ugandanDestinations, testimonials, sampleItinerary } from '../data/ugandaData';
-import { Star, MapPin, ArrowRight, Quote, CheckCircle2 } from 'lucide-react';
+import { Star, MapPin, ArrowRight, Quote, CheckCircle2, ChevronDown, Send } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
+const FAQItem = ({ question, answer }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <div className="border-b border-gray-100 dark:border-white/5">
+      <button 
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full py-6 flex justify-between items-center text-left group"
+      >
+        <span className="text-lg font-bold group-hover:text-primary transition-colors">{question}</span>
+        <ChevronDown className={`transition-transform duration-300 ${isOpen ? 'rotate-180 text-primary' : 'text-gray-400'}`} />
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="overflow-hidden"
+          >
+            <p className="pb-6 text-gray-500 dark:text-gray-400 leading-relaxed">
+              {answer}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
 
 const DestinationCard = ({ destination }) => (
   <motion.div 
@@ -341,6 +371,98 @@ const Home = () => {
                 <div className="text-primary text-xs font-bold uppercase tracking-widest mt-1">{t.country}</div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Counter Section */}
+      <section className="py-24 bg-primary text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
+            {[
+              { label: "Gorilla Population", value: "50%", suffix: "" },
+              { label: "Bird Species", value: "1,000", suffix: "+" },
+              { label: "National Parks", value: "10", suffix: "" },
+              { label: "Safe Journeys", value: "5,000", suffix: "+" }
+            ].map((stat, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <div className="text-4xl md:text-6xl font-serif font-bold mb-2">
+                  {stat.value}{stat.suffix}
+                </div>
+                <div className="text-xs font-bold uppercase tracking-widest opacity-80">{stat.label}</div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-32 max-w-4xl mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-serif font-bold mb-4">Common Inquiries</h2>
+          <p className="text-gray-500">Everything you need to know before your journey</p>
+        </div>
+        <div className="space-y-2">
+          <FAQItem 
+            question="When is the best time to visit Uganda?" 
+            answer="The best time is during the dry seasons from June to August and December to February. This is ideal for gorilla trekking and wildlife viewing as animals gather around water sources."
+          />
+          <FAQItem 
+            question="Do I need a visa to enter Uganda?" 
+            answer="Most nationalities require an e-Visa, which should be applied for in advance via the official Ugandan Immigration portal. We recommend doing this at least 2 weeks before travel."
+          />
+          <FAQItem 
+            question="Is it safe to track gorillas in Bwindi?" 
+            answer="Yes, gorilla trekking is highly regulated and safe. You will be accompanied by professional armed rangers and experienced guides at all times during the trek."
+          />
+        </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <section className="max-w-7xl mx-auto px-4 mb-32">
+        <div className="glass p-12 md:p-24 rounded-[3rem] text-center relative overflow-hidden">
+          <div className="absolute -top-24 -left-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
+          <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
+          
+          <div className="relative z-10 max-w-2xl mx-auto space-y-8">
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <Send className="text-primary w-8 h-8" />
+            </motion.div>
+            <h2 className="text-3xl md:text-6xl font-serif font-bold">The Inner Circle</h2>
+            <p className="text-gray-500 dark:text-gray-400 text-lg">
+              Join our exclusive community of travelers. Receive seasonal luxury offers and hidden gem itineraries directly in your inbox.
+            </p>
+            <form 
+              onSubmit={(e) => {
+                e.preventDefault();
+                Swal.fire({
+                  title: 'Welcome to the Circle!',
+                  text: 'You have successfully subscribed to our luxury newsletter.',
+                  icon: 'success',
+                  confirmButtonColor: '#B8860B'
+                });
+              }}
+              className="flex flex-col md:flex-row gap-4 max-w-lg mx-auto"
+            >
+              <input 
+                type="email" 
+                required 
+                placeholder="Your email address" 
+                className="flex-1 px-8 py-4 bg-white dark:bg-black border border-gray-100 dark:border-white/10 rounded-full outline-none focus:ring-2 focus:ring-primary"
+              />
+              <button className="px-10 py-4 bg-primary text-white rounded-full font-bold hover:scale-105 transition-transform shadow-xl">
+                Subscribe
+              </button>
+            </form>
           </div>
         </div>
       </section>
