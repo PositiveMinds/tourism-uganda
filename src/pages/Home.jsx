@@ -102,6 +102,19 @@ const Home = () => {
   return (
     <div className="pb-20">
       <Hero />
+
+      {/* Partners Section */}
+      <section className="py-12 bg-gray-50 dark:bg-black/40 border-b dark:border-white/5 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-40 grayscale hover:grayscale-0 transition-all duration-700">
+            {['Uganda Airlines', 'Serena Hotels', 'Marasa Africa', 'Great Lakes Safaris'].map((partner) => (
+              <div key={partner} className="text-xl font-serif font-bold tracking-tighter text-gray-400 hover:text-primary transition-colors cursor-default">
+                {partner}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       
       {/* Featured Section */}
       <section id="destinations" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-32 relative">

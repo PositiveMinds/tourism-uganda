@@ -7,12 +7,29 @@ import { motion, AnimatePresence } from 'framer-motion';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [time, setTime] = useState('');
   const { isDarkMode, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    
+    const updateTime = () => {
+      const kampalaTime = new Date().toLocaleTimeString('en-GB', {
+        timeZone: 'Africa/Kampala',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+      setTime(kampalaTime);
+    };
+    
+    updateTime();
+    const interval = setInterval(updateTime, 60000);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearInterval(interval);
+    };
   }, []);
 
   const navLinks = [
@@ -20,6 +37,7 @@ const Navbar = () => {
     { name: 'Destinations', path: '/#destinations' },
     { name: 'Reservations', path: '/reservations' },
     { name: 'Register', path: '/register' },
+    { name: 'Login', path: '/login' },
   ];
 
   return (
@@ -44,6 +62,10 @@ const Navbar = () => {
                 {link.name}
               </NavLink>
             ))}
+            <div className="flex items-center space-x-2 border-l border-gray-200 dark:border-white/10 pl-6 ml-2">
+              <span className={`text-[10px] font-bold uppercase tracking-widest ${scrolled ? 'text-gray-400' : 'text-white/60'}`}>Kampala</span>
+              <span className={`text-sm font-medium ${scrolled ? 'text-gray-700 dark:text-gray-200' : 'text-white'}`}>{time}</span>
+            </div>
             <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
               {isDarkMode ? <Sun className="text-yellow-400 w-5 h-5" /> : <Moon className={`${scrolled ? 'text-gray-700 dark:text-gray-200' : 'text-white'} w-5 h-5`} />}
             </button>
