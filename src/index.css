@@ -37,6 +37,31 @@
   @apply backdrop-blur-md bg-white/70 dark:bg-black/70 border-b border-white/20 dark:border-white/5;
 }
 
+/* DatePicker Luxury Overrides */
+.react-datepicker {
+  @apply !bg-white dark:!bg-[#1A1A1A] !border-gray-100 dark:!border-white/10 !rounded-2xl !shadow-2xl !font-sans overflow-hidden;
+}
+
+.react-datepicker__header {
+  @apply !bg-gray-50 dark:!bg-black/50 !border-b-gray-100 dark:!border-b-white/10 !pt-4;
+}
+
+.react-datepicker__current-month, .react-datepicker__day-name, .react-datepicker__day {
+  @apply dark:!text-white;
+}
+
+.react-datepicker__day:hover {
+  @apply !bg-primary/20 !rounded-full;
+}
+
+.react-datepicker__day--selected, .react-datepicker__day--keyboard-selected {
+  @apply !bg-primary !text-white !rounded-full;
+}
+
+.react-datepicker__navigation-icon::before {
+  @apply !border-primary;
+}
+
 .text-gradient {
   @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-dark;
 }

@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import { Calendar, Users, MapPin, CreditCard } from 'lucide-react';
 import { ugandanDestinations } from '../data/ugandaData';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Reservations = () => {
   const [formData, setFormData] = useState({
     destination: '',
-    date: '',
+    date: new Date(),
     guests: '1',
     name: '',
     email: ''
@@ -16,7 +18,7 @@ const Reservations = () => {
     e.preventDefault();
     Swal.fire({
       title: 'Booking Confirmed!',
-      text: `Thank you, ${formData.name}. Your reservation for ${formData.destination} is being processed.`,
+      text: `Thank you, ${formData.name}. Your reservation for ${formData.destination} on ${formData.date.toLocaleDateString()} is being processed.`,
       icon: 'success',
       confirmButtonColor: '#B8860B',
       background: document.documentElement.classList.contains('dark') ? '#1A1A1A' : '#FFFFFF',
@@ -26,6 +28,10 @@ const Reservations = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleDateChange = (date) => {
+    setFormData({ ...formData, date: date });
   };
 
   return (
@@ -38,7 +44,7 @@ const Reservations = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-2">
-            <form onSubmit={handleSubmit} className="bg-white dark:bg-accent p-8 rounded-3xl shadow-xl space-y-6">
+            <form onSubmit={handleSubmit} className="bg-white dark:bg-[#1A1A1A] p-8 rounded-3xl shadow-xl space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-medium flex items-center space-x-2">
@@ -61,12 +67,12 @@ const Reservations = () => {
                     <Calendar size={16} className="text-primary" />
                     <span>Preferred Date</span>
                   </label>
-                  <input 
-                    type="date" 
-                    name="date"
-                    required
-                    onChange={handleChange}
+                  <DatePicker
+                    selected={formData.date}
+                    onChange={handleDateChange}
+                    minDate={new Date()}
                     className="w-full p-4 bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-primary outline-none"
+                    dateFormat="MMMM d, yyyy"
                   />
                 </div>
 
