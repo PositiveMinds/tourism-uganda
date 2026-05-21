@@ -166,36 +166,88 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Cinematic Video Section */}
-      <section className="relative h-[60vh] md:h-[80vh] w-full overflow-hidden flex items-center justify-center">
+      {/* Cinematic Video Section - Epic Redesign */}
+      <section className="relative h-screen w-full overflow-hidden flex items-center justify-center">
+        {/* Background Video */}
         <video 
           autoPlay 
           muted 
           loop 
           playsInline
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover scale-105"
         >
           <source src="https://assets.mixkit.co/videos/preview/mixkit-african-savanna-at-sunset-4122-large.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
         
-        <div className="relative z-10 text-center px-4">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
-            className="glass p-12 md:p-20 rounded-[4rem] max-w-4xl mx-auto border-white/10"
-          >
-            <h2 className="text-4xl md:text-7xl font-serif font-bold text-white mb-6">The Pearl of Africa</h2>
-            <p className="text-white/80 text-lg md:text-xl font-light tracking-wide leading-relaxed max-w-2xl mx-auto">
-              Where the majestic Nile begins its journey, and the mist-covered mountains hold secrets of the ancient wild. Discover a world of untamed beauty.
-            </p>
-            <button className="mt-10 px-10 py-4 bg-primary hover:bg-primary-dark text-white rounded-full font-bold transition-all shadow-2xl">
-              Experience the Magic
-            </button>
-          </motion.div>
+        {/* Cinematic Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80" />
+        <div className="absolute inset-0 bg-black/20 backdrop-blur-[1px]" />
+        
+        {/* Letterbox Effect (Top/Bottom cinematic bars) */}
+        <div className="absolute top-0 left-0 right-0 h-16 bg-black z-20 opacity-40 md:opacity-60" />
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-black z-20 opacity-40 md:opacity-60" />
+
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-8">
+          <div className="flex flex-col items-center text-center space-y-8">
+            {/* Floating Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="px-6 py-2 glass rounded-full border border-white/20 shadow-2xl"
+            >
+              <span className="text-primary font-bold tracking-[0.5em] text-[10px] uppercase">Immersion</span>
+            </motion.div>
+
+            {/* Main Headline */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+              className="space-y-4"
+            >
+              <h2 className="text-5xl md:text-9xl font-serif font-bold text-white tracking-tight">
+                The Pearl <br className="hidden md:block"/>
+                <span className="text-primary italic">of Africa</span>
+              </h2>
+            </motion.div>
+
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 1 }}
+              className="text-white/70 text-lg md:text-2xl font-light max-w-3xl leading-relaxed italic"
+            >
+              "In the heart of the continent lies a world of untamed majesty. From the roar of the falls to the silence of the forest, Uganda is not just a destination—it is an awakening."
+            </motion.p>
+
+            {/* CTA Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+            >
+              <button className="group relative px-12 py-5 overflow-hidden rounded-full bg-white text-black font-bold transition-all hover:bg-primary hover:text-white">
+                <span className="relative z-10 flex items-center space-x-3">
+                  <span>Begin the Adventure</span>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                </span>
+                <div className="absolute inset-0 bg-primary translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              </button>
+            </motion.div>
+          </div>
         </div>
+
+        {/* Decorative Scroll Hint */}
+        <motion.div 
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-2 opacity-50"
+        >
+          <div className="w-[1px] h-12 bg-gradient-to-b from-transparent to-white" />
+          <span className="text-[8px] uppercase tracking-[0.3em] text-white font-bold">Scroll</span>
+        </motion.div>
       </section>
 
       {/* Signature Experience Section */}
